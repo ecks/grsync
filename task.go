@@ -122,7 +122,7 @@ func processStderr(wg *sync.WaitGroup, task *Task, stderr io.Reader) {
 	for scanner.Scan() {
     logStderr := scanner.Text()
     fmt.Printf("logStderr: %v\n", logStderr)
-		task.log.Stderr += logStr + "\n"
+		task.log.Stderr += logStderr + "\n"
 	}
 }
 
