@@ -99,7 +99,7 @@ func processStdout(wg *sync.WaitGroup, task *Task, stdout io.Reader) {
 	scanner := bufio.NewScanner(stdout)
 	for scanner.Scan() {
 		logStr := scanner.Text()
-    fmt.Printf("logStr: %v\n", logStr)
+    fmt.Printf("logStdout: %v\n", logStr)
 		if progressMatcher.Match(logStr) {
 			task.state.Remain, task.state.Total = getTaskProgress(progressMatcher.Extract(logStr))
 
@@ -120,7 +120,9 @@ func processStderr(wg *sync.WaitGroup, task *Task, stderr io.Reader) {
 
 	scanner := bufio.NewScanner(stderr)
 	for scanner.Scan() {
-		task.log.Stderr += scanner.Text() + "\n"
+    logStderr := scanner.Text()
+    fmt.Printf("logStderr: %v\n", logStderr)
+		task.log.Stderr += logStr + "\n"
 	}
 }
 
