@@ -7,6 +7,7 @@ import (
 	"strconv"
 	"strings"
 	"sync"
+  "fmt"
 )
 
 // Task is high-level API under rsync
@@ -98,6 +99,7 @@ func processStdout(wg *sync.WaitGroup, task *Task, stdout io.Reader) {
 	scanner := bufio.NewScanner(stdout)
 	for scanner.Scan() {
 		logStr := scanner.Text()
+    fmt.Printf("logStr: %v\n", logStr)
 		if progressMatcher.Match(logStr) {
 			task.state.Remain, task.state.Total = getTaskProgress(progressMatcher.Extract(logStr))
 
